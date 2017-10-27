@@ -75,7 +75,7 @@ public class RuntimeDealer {
 	}
 
 	//aqui eu parei
-	public void deployPodOnNode(V1Pod pod, V1Node node) {
+	public void deployPodOnNode(V1Pod pod, V1Node node) throws ApiException {
 		String podToMove = pod.getMetadata().getName();
 		String nodeWhereToMove = node.getMetadata().getName();
 

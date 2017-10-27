@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.kubernetes.client.ApiException;
 import io.kubernetes.client.apis.CoreV1Api;
 import io.kubernetes.client.models.V1Affinity;
 import io.kubernetes.client.models.V1LabelSelector;
@@ -44,11 +45,15 @@ public class PodAbstraction {
 		this.nodeSelector.put(key, value);
 	}
 	
-	public void updateNodeSelector(V1Pod pod) {	
-		//System.out.println("o pod está no nó: "+"\n"+pod.getSpec().toString());
+	public void updateNodeSelector(V1Pod pod) throws ApiException {		
 		pod.getSpec().setNodeSelector(this.nodeSelector);
-		//pod.getSpec().setNodeName("swarm5");
-		System.out.println("e agora está no nó: "+pod.getSpec().getNodeName());
+		pod.getSpec().setNodeName("swarm5");
+		
+		String podName = pod.getMetadata().getName();
+		String podNamespace = pod.getMetadata().getNamespace();		
+		
+		K8Instance.getInstance().patchNamespacedPod(podName, podNamespace, pod, null);
+		System.out.println("and now it is on node: "+pod.getSpec().getNodeName());
 		
 	}	
 	

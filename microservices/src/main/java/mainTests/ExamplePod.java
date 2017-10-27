@@ -8,6 +8,7 @@ import io.kubernetes.client.models.V1Pod;
 import io.kubernetes.client.models.V1PodList;
 import io.kubernetes.client.util.Config;
 import io.kubernetes.client.util.KubeConfig;
+import uniqueInstance.ConfigGFADS;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -18,6 +19,8 @@ import java.io.IOException;
  */
 public class ExamplePod {
 	public static void main(String[] args) throws IOException, ApiException{
+		
+		/*
 		final String pathToGfadsConfigFile = "/home/vinicius/Documentos/gfads-test.config";
 		FileReader gfadsConfigFile;
 		KubeConfig kc;
@@ -26,7 +29,8 @@ public class ExamplePod {
 
 		ApiClient client = Config.fromConfig(kc);
 		Configuration.setDefaultApiClient(client);
-
+*/
+		ConfigGFADS.setGfads();
 
 		CoreV1Api api = new CoreV1Api();
 		V1PodList list = api.listPodForAllNamespaces(null, null, null, null, null, null);
