@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import UniqueInstance.K8Instance;
 import io.kubernetes.client.apis.CoreV1Api;
 import io.kubernetes.client.models.V1Affinity;
 import io.kubernetes.client.models.V1LabelSelector;
@@ -14,6 +13,7 @@ import io.kubernetes.client.models.V1NodeSelector;
 import io.kubernetes.client.models.V1Pod;
 import io.kubernetes.client.models.V1PodAffinityTerm;
 import io.kubernetes.client.proto.V1.NodeSelector;
+import uniqueInstance.K8Instance;
 
 public class PodAbstraction {
 

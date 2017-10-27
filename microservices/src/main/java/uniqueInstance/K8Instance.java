@@ -1,4 +1,4 @@
-package UniqueInstance;
+package uniqueInstance;
 
 import io.kubernetes.client.apis.CoreV1Api;
 
