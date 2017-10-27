@@ -13,15 +13,18 @@ public class ConfigGFADS {
 	private static final String pathToGfadsConfigFile = "/home/vinicius/Documentos/gfads-test.config";
 	private static FileReader gfadsConfigFile;
 	private static KubeConfig kc;
+	private static ApiClient client;
 	
 
 	public static void setGfads() throws FileNotFoundException {
 		gfadsConfigFile = new FileReader(pathToGfadsConfigFile );
 		kc = KubeConfig.loadKubeConfig(gfadsConfigFile);
-		ApiClient client = Config.fromConfig(kc);
-		Configuration.setDefaultApiClient(client);
-
-		
+		client = Config.fromConfig(kc);
+		Configuration.setDefaultApiClient(client);		
+	}
+	
+	public static ApiClient getApiClient() {
+		return client;
 	}
 
 }
