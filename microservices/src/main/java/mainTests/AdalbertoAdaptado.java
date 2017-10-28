@@ -1,5 +1,6 @@
 package mainTests;
 
+import java.io.FileNotFoundException;
 import java.util.Collections;
 
 import io.kubernetes.client.ApiClient;
@@ -11,6 +12,7 @@ import io.kubernetes.client.models.AppsV1beta1DeploymentList;
 import io.kubernetes.client.models.V1LabelSelector;
 import io.kubernetes.client.models.V1LabelSelectorRequirement;
 import io.kubernetes.client.util.Config;
+import uniqueInstance.ConfigGFADS;
 
 public class AdalbertoAdaptado {
 
@@ -18,24 +20,27 @@ public class AdalbertoAdaptado {
 		// Use the CoreV1Api to get the pods and set their labels
 	}
 	
-	public static void main(String[] args) throws ApiException {
-				 
-		//setar a configuração aqui para o gfads
-		ApiClient client = Config.fromUrl("");
-		Configuration.setDefaultApiClient(client);
+	public static void main(String[] args) throws ApiException, FileNotFoundException {
+		ConfigGFADS.setGfads();
+		
+		
+		//ApiClient client = Config.fromUrl("");
+		//Configuration.setDefaultApiClient(client);
 
-		client.setConnectTimeout(10);
-
+		//client.setConnectTimeout(10);
+		ConfigGFADS.getApiClient().setConnectTimeout(10);
+		
 		// set pod's labels
 		setLabelToPods();
 		
 		// update the deployment config
-		AppsV1beta1Api api = new AppsV1beta1Api(client); 
+		AppsV1beta1Api api = new AppsV1beta1Api(ConfigGFADS.getApiClient()); 
 
 		AppsV1beta1DeploymentList list;
 
 		list = api.listDeploymentForAllNamespaces(null, null, null, null, null, null);
-		AppsV1beta1Deployment dep;
+		
+		//AppsV1beta1Deployment dep;
 		
 		for(AppsV1beta1Deployment item : list.getItems()) {
 			
@@ -47,7 +52,7 @@ public class AdalbertoAdaptado {
 			selector.putMatchLabelsItem("key1", "value1");
 			selector.putMatchLabelsItem("key2", "value2");
 			
-			// documentation of Selector Requiremetn
+			// documentation of Selector Requirement
 			// https://github.com/kubernetes-client/java/blob/1db144d9bc4690f6ce0137497cac7af0e1bb3f3c/kubernetes/docs/V1LabelSelectorRequirement.md
 			V1LabelSelectorRequirement requirement = new V1LabelSelectorRequirement();
 			requirement.setKey("key1");
