@@ -20,9 +20,7 @@ public class AdalbertoAdaptado {
 
 	public static void setLabelToPods() throws ApiException { 
 		// Use the CoreV1Api to get the pods and set their labels
-		CoreV1Api core = new CoreV1Api(ConfigGFADS.getApiClient());
-		V1PodList list = core.listPodForAllNamespaces(null, null, null, null, null, null);
-		
+				
 	}
 	
 	public static void main(String[] args) throws ApiException, FileNotFoundException {
@@ -59,6 +57,9 @@ public class AdalbertoAdaptado {
 			
 			// documentation of Selector Requirement
 			// https://github.com/kubernetes-client/java/blob/1db144d9bc4690f6ce0137497cac7af0e1bb3f3c/kubernetes/docs/V1LabelSelectorRequirement.md
+			/**
+			 * o requirement aqui criado por Adalberto não é usado em canto algum!
+			 */
 			V1LabelSelectorRequirement requirement = new V1LabelSelectorRequirement();
 			requirement.setKey("key1");
 			requirement.setOperator("In"); 

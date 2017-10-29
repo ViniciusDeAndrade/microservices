@@ -43,6 +43,7 @@ public class Adalberto {
 			String namespace = item.getMetadata().getNamespace();
 			AppsV1beta1Deployment body = item;
 			
+			//to aqui
 			V1LabelSelector selector = new V1LabelSelector();
 			selector.putMatchLabelsItem("key1", "value1");
 			selector.putMatchLabelsItem("key2", "value2");

@@ -18,9 +18,7 @@ import io.kubernetes.client.models.V1PodTemplateSpec;
 import io.kubernetes.client.proto.V1.NodeSelector;
 import uniqueInstance.K8Instance;
 
-public class PodAbstraction {
-
-	
+public class PodAbstraction {	
 	
 	/**
 	 * Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) 
