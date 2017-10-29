@@ -7,17 +7,22 @@ import io.kubernetes.client.ApiClient;
 import io.kubernetes.client.ApiException;
 import io.kubernetes.client.Configuration;
 import io.kubernetes.client.apis.AppsV1beta1Api;
+import io.kubernetes.client.apis.CoreV1Api;
 import io.kubernetes.client.models.AppsV1beta1Deployment;
 import io.kubernetes.client.models.AppsV1beta1DeploymentList;
 import io.kubernetes.client.models.V1LabelSelector;
 import io.kubernetes.client.models.V1LabelSelectorRequirement;
+import io.kubernetes.client.models.V1PodList;
 import io.kubernetes.client.util.Config;
 import uniqueInstance.ConfigGFADS;
 
 public class AdalbertoAdaptado {
 
-	public static void setLabelToPods() { 
+	public static void setLabelToPods() throws ApiException { 
 		// Use the CoreV1Api to get the pods and set their labels
+		CoreV1Api core = new CoreV1Api(ConfigGFADS.getApiClient());
+		V1PodList list = core.listPodForAllNamespaces(null, null, null, null, null, null);
+		
 	}
 	
 	public static void main(String[] args) throws ApiException, FileNotFoundException {

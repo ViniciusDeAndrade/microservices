@@ -78,7 +78,7 @@ public class RuntimeDealer {
 	public void deployPodOnNode(V1Pod pod, V1Node node) throws ApiException {
 		String podToMove = pod.getMetadata().getName();
 		String nodeWhereToMove = node.getMetadata().getName();
-
+				
 		PodAbstraction podAbstraction = new PodAbstraction(podToMove, nodeWhereToMove);
 		//operação crítica
 		podAbstraction.updateNodeSelector(pod);
