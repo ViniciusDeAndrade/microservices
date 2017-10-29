@@ -23,6 +23,7 @@ import io.kubernetes.client.proto.V1.PodAffinityTerm;
 import io.kubernetes.client.util.Config;
 import io.kubernetes.client.util.KubeConfig;
 
+@Deprecated
 public class RuntimeDealer {
 
 	private static final String pathToGfadsConfigFile = 

@@ -61,7 +61,7 @@ public class PodAbstraction {
 		String podName = pod.getMetadata().getName();
 		String podNamespace = pod.getMetadata().getNamespace();		
 		
-		K8Instance.getInstance().patchNamespacedPod(podName, podNamespace, pod, null);
+		K8Instance.getCoreV1ApiInstance().patchNamespacedPod(podName, podNamespace, pod, null);
 		System.out.println("and now it is on node: "+pod.getSpec().getNodeName());
 		
 	}

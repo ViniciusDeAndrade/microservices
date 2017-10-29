@@ -13,11 +13,13 @@ public class LabelAbstraction {
 	 * @param matchLabelsItem is the value of the tuple
 	 * @return is the entire label selector
 	 */
-	public V1LabelSelector setLabel(String key, String matchLabelsItem) {
+	public V1LabelSelector dealLabelSelector(String key, String matchLabelsItem) {
 		V1LabelSelector selector = new V1LabelSelector();
 		selector.putMatchLabelsItem(key, matchLabelsItem);
 		return selector;
 	}
+	
+	
 	
 	/**
 	 * this method just create and return a label selector requirement
@@ -25,7 +27,7 @@ public class LabelAbstraction {
 	 * @param operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist
 	 * @return is the entire label selector
 	 */
-	public V1LabelSelectorRequirement setLabelRequirement(String key, String operator, List<String> values) {
+	public V1LabelSelectorRequirement dealLabelRequirement(String key, String operator, List<String> values) {
 		V1LabelSelectorRequirement requirement = new V1LabelSelectorRequirement();
 		requirement.setKey(key);
 		requirement.setOperator(operator);

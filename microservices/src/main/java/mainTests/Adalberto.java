@@ -43,12 +43,12 @@ public class Adalberto {
 			String namespace = item.getMetadata().getNamespace();
 			AppsV1beta1Deployment body = item;
 			
-			//to aqui
+			
 			V1LabelSelector selector = new V1LabelSelector();
 			selector.putMatchLabelsItem("key1", "value1");
 			selector.putMatchLabelsItem("key2", "value2");
 			
-			// documentation of Selector Requiremetn
+			// documentation of Selector Requirement
 			// https://github.com/kubernetes-client/java/blob/1db144d9bc4690f6ce0137497cac7af0e1bb3f3c/kubernetes/docs/V1LabelSelectorRequirement.md
 			V1LabelSelectorRequirement requirement = new V1LabelSelectorRequirement();
 			requirement.setKey("key1");
