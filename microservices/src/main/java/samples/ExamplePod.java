@@ -32,8 +32,8 @@ public class ExamplePod {
 */
 		ConfigGFADS gfads = new ConfigGFADS();
 
-		CoreV1Api api = new CoreV1Api();
-		V1PodList list = api.listPodForAllNamespaces(null, null, null, null, null, null);
+		//CoreV1Api api = new CoreV1Api();
+		V1PodList list = gfads.getCoreV1ApiInstance().listPodForAllNamespaces(null, null, null, null, null, null);
 		for (V1Pod item : list.getItems()) 
 			if(item.getMetadata().getName().equalsIgnoreCase("kube-proxy-8ktf4"))
 				System.out.println(item.getSpec().getNodeName());

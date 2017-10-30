@@ -52,12 +52,12 @@ public class RuntimeDealer {
 	
 	
 	private ConfigGFADS gfads ;
-	private CoreV1Api api;
+	private CoreV1Api api = gfads.getCoreV1ApiInstance();
 	
 	
 	public RuntimeDealer() throws FileNotFoundException {
 		this.gfads = new ConfigGFADS();
-		this.api = gfads.getCoreV1ApiInstance();
+		
 	}
 	
 	
@@ -108,7 +108,7 @@ public class RuntimeDealer {
 	 * @return when this method find the node, it will be returned.
 	 * @throws ApiException
 	 */
-	public V1Node searchNode(String nodeName) throws ApiException {
+	private V1Node searchNode(String nodeName) throws ApiException {
 		V1NodeList list = this.api.listNode(null, null, null, null, null, null);
 		for(V1Node node: list.getItems())
 			if(node.getMetadata().getName().equals(nodeName))
@@ -122,7 +122,7 @@ public class RuntimeDealer {
 	 * @return when this method find the pod, it will be returned.
 	 * @throws ApiException
 	 */
-	public V1Pod searchPod(String podName) throws ApiException {
+	private V1Pod searchPod(String podName) throws ApiException {
 		V1PodList list = this.api.listPodForAllNamespaces(null, null, null, null, null , null);
 		for(V1Pod pod: list.getItems())
 			if(pod.getMetadata().getName().equals(podName))

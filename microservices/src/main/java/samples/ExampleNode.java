@@ -13,6 +13,7 @@ import io.kubernetes.client.models.V1Pod;
 import io.kubernetes.client.models.V1PodList;
 import io.kubernetes.client.util.Config;
 import io.kubernetes.client.util.KubeConfig;
+import microservices.RuntimeDealer;
 /**
  * inspecting nodes
  * @author vinicius
@@ -31,6 +32,8 @@ public class ExampleNode {
 		Configuration.setDefaultApiClient(client);
 
 		CoreV1Api api = new CoreV1Api();
+		RuntimeDealer rd = new RuntimeDealer();
+		
 		//update node
 		//api.patchNode("swarm1", body, pretty)
 
