@@ -12,6 +12,7 @@ import io.kubernetes.client.models.AppsV1beta1DeploymentList;
 import io.kubernetes.client.models.V1LabelSelector;
 import io.kubernetes.client.models.V1LabelSelectorRequirement;
 import io.kubernetes.client.models.V1Pod;
+import io.kubernetes.client.models.V1PodList;
 import uniqueInstance.ConfigGFADS;
 
 public class DeploymentAbstraction {
@@ -41,14 +42,18 @@ public class DeploymentAbstraction {
 	public void setLabelsToPods(String podName, String namespace, String body, String pretty) throws ApiException {
 		this.core = ConfigGFADS.getCoreV1ApiInstance();
 		
+		V1PodList list = this.core.listPodForAllNamespaces(null, null, null, null, null, null);
+		for(V1Pod pod: list.getItems()) {
+			
+			//pod.getMetadata().setLabels(labels);
+		}
+			
+		
+		
 		//partially update a pod
 		V1Pod pod = core.patchNamespacedPod(podName, namespace, body, pretty);
 		
 	}
-	
-		
-	
-	
 	
 	public void patchDeployment() throws ApiException {		
 		
