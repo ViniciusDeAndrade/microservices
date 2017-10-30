@@ -30,7 +30,7 @@ public class ExamplePod {
 		ApiClient client = Config.fromConfig(kc);
 		Configuration.setDefaultApiClient(client);
 */
-		ConfigGFADS.setGfads();
+		ConfigGFADS gfads = new ConfigGFADS();
 
 		CoreV1Api api = new CoreV1Api();
 		V1PodList list = api.listPodForAllNamespaces(null, null, null, null, null, null);

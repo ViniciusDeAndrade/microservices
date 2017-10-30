@@ -24,7 +24,7 @@ public class AdalbertoAdaptado {
 	}
 	
 	public static void main(String[] args) throws ApiException, FileNotFoundException {
-		ConfigGFADS.setGfads();
+		ConfigGFADS gfads = new ConfigGFADS();
 		
 		
 		//ApiClient client = Config.fromUrl("");

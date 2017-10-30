@@ -17,9 +17,7 @@ public class LabelAbstraction {
 		V1LabelSelector selector = new V1LabelSelector();
 		selector.putMatchLabelsItem(key, matchLabelsItem);
 		return selector;
-	}
-	
-	
+	}	
 	
 	/**
 	 * this method just create and return a label selector requirement

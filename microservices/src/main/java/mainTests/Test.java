@@ -12,7 +12,7 @@ import uniqueInstance.ConfigGFADS;
 public class Test {
 
 	public static void main(String[] args) throws FileNotFoundException, ApiException {
-		ConfigGFADS.setGfads();
+		ConfigGFADS gfads = new ConfigGFADS();
 		final String podName = "etcd-swarm1";
 
 		//final String oldNode = "swarm1";
