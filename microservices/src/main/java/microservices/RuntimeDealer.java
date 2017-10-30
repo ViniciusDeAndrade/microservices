@@ -22,10 +22,11 @@ import io.kubernetes.client.proto.V1.PodAffinity;
 import io.kubernetes.client.proto.V1.PodAffinityTerm;
 import io.kubernetes.client.util.Config;
 import io.kubernetes.client.util.KubeConfig;
+import uniqueInstance.ConfigGFADS;
 
 @Deprecated
 public class RuntimeDealer {
-
+/*
 	private static final String pathToGfadsConfigFile = 
 			"/home/vinicius/Documentos/gfads-test.config";
 	private FileReader gfadsConfigFile;
@@ -48,7 +49,19 @@ public class RuntimeDealer {
 		Configuration.setDefaultApiClient(client);
 		this.api = new CoreV1Api();
 	}
-
+*/
+	
+	
+	private ConfigGFADS gfads ;
+	private CoreV1Api api;
+	
+	
+	public RuntimeDealer() throws FileNotFoundException {
+		this.gfads = new ConfigGFADS();
+		this.api = gfads.getCoreV1ApiInstance();
+	}
+	
+	
 	/**
 	 * this method should be used when you want to migrate a microservice (a pod) 
 	 * to another node 
@@ -60,7 +73,6 @@ public class RuntimeDealer {
 	 * @return it will return true if this operation occurs without any erros
 	 * @throws ApiException 
 	 */
-
 	public boolean move(String microserviceName, String sourceHost, String targetHost) throws ApiException {
 		V1Pod pod = this.searchPod(microserviceName);
 		V1Node node = this.searchNode(targetHost);

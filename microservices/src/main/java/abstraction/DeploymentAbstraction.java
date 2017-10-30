@@ -20,11 +20,11 @@ public class DeploymentAbstraction {
 	private ConfigGFADS gfads ;
 	private AppsV1beta1Api api;
 	private CoreV1Api core;
-	
+
 	public DeploymentAbstraction() throws FileNotFoundException {
 		this.gfads = new ConfigGFADS();
 	}
-	
+
 	@Deprecated
 	private V1LabelSelector configLabelSelector(String key, String value) {
 		LabelAbstraction label = new LabelAbstraction();
@@ -38,54 +38,57 @@ public class DeploymentAbstraction {
 		label.setLabelRequirement(key, operator, values);
 		return label.getLabelSelectorRequirement();		
 	}
-	
-	public void setLabelsToPods(String podName, String namespace, String body, String pretty) throws ApiException {
-		this.core = ConfigGFADS.getCoreV1ApiInstance();
-		
+
+	public void setLabelsToPods(String podName, String namespace, Object body, String pretty) throws ApiException {
+		this.core = ConfigGFADS.getCoreV1ApiInstance();		
+
 		V1PodList list = this.core.listPodForAllNamespaces(null, null, null, null, null, null);
-		for(V1Pod pod: list.getItems()) {
-			
-			//pod.getMetadata().setLabels(labels);
-		}
-			
-		
-		
+		/**
+		 * I still want to know the difference of label selector and labels!!!!
+		 */
+		LabelAbstraction labels = new LabelAbstraction();
+		for(V1Pod pod: list.getItems())
+			if(pod.getMetadata().getName().equals(podName))
+				//apply label to the selected pod by its name
+				pod.getMetadata().setLabels(labels.getLabelSelector().getMatchLabels());
+
+
 		//partially update a pod
-		V1Pod pod = core.patchNamespacedPod(podName, namespace, body, pretty);
-		
+		core.patchNamespacedPod(podName, namespace, body, pretty);
+
 	}
-	
+
 	public void patchDeployment() throws ApiException {		
-		
+
 		AppsV1beta1DeploymentList list = this.gfads.getAppsV1BetaApi().listDeploymentForAllNamespaces(null, null, null, null, null, null);
 		LabelAbstraction label = new LabelAbstraction();
-		
+
 		for(AppsV1beta1Deployment item: list.getItems()) {
 			//deal label selector
 			label.setLabelSelector("key", "value1");
 			label.setLabelSelector("key2", "value2");
 			V1LabelSelector selector = label.getLabelSelector();
-			
-		
+
+
 			//deal label requirement
 			/**
 			 * the last parameter of the label Requirement is a List of String (see singletonList method)
 			 */
 			label.setLabelRequirement("key", "in", Collections.singletonList("value1"));
 			V1LabelSelectorRequirement requirement = label.getLabelSelectorRequirement();
-			
+
 			//deal with deployment object			
 			String name = item.getMetadata().getName();
 			String namespace = item.getMetadata().getNamespace();
 			AppsV1beta1Deployment body = item;
-			
+
 			body.getSpec().setSelector(selector);
-			
+
 			this.api = this.gfads.getAppsV1BetaApi();
-			
-			
+
+
 			this.api.patchNamespacedDeployment(name, namespace, body, null);			
-			
+
 		}
 	}
 }

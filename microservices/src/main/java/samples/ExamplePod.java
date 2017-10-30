@@ -1,4 +1,4 @@
-package mainTests;
+package samples;
 
 import io.kubernetes.client.ApiClient;
 import io.kubernetes.client.ApiException;

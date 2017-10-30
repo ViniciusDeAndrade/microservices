@@ -1,4 +1,4 @@
-package mainTests;
+package samples;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -18,7 +18,7 @@ import io.kubernetes.client.util.KubeConfig;
  * @author vinicius
  *
  */
-public class Gfads {
+public class ExampleNode {
 	public static void main(String[] args) throws ApiException, FileNotFoundException {
 
 		final String pathToGfadsConfigFile = "/home/vinicius/Documentos/gfads-test.config";
