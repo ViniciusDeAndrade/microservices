@@ -39,26 +39,26 @@ public class DeploymentAbstraction {
 		return label.getLabelSelectorRequirement();		
 	}
 
-	public void setLabelsToPods(String podName, String namespace, Object body, String pretty) throws ApiException {
+	public V1Pod setLabelsToPods(String podName, String namespace, Object body, String pretty) throws ApiException {
 		this.core = ConfigGFADS.getCoreV1ApiInstance();		
-
 		V1PodList list = this.core.listPodForAllNamespaces(null, null, null, null, null, null);
+		
 		/**
 		 * I still want to know the difference of label selector and labels!!!!
 		 */
 		LabelAbstraction labels = new LabelAbstraction();
+		
 		for(V1Pod pod: list.getItems())
 			if(pod.getMetadata().getName().equals(podName))
 				//apply label to the selected pod by its name
 				pod.getMetadata().setLabels(labels.getLabelSelector().getMatchLabels());
-
-
+		
 		//partially update a pod
-		core.patchNamespacedPod(podName, namespace, body, pretty);
+		return core.patchNamespacedPod(podName, namespace, body, pretty);
 
 	}
 
-	public void patchDeployment() throws ApiException {		
+	public AppsV1beta1Deployment patchDeployment() throws ApiException {		
 
 		AppsV1beta1DeploymentList list = this.gfads.getAppsV1BetaApi().listDeploymentForAllNamespaces(null, null, null, null, null, null);
 		LabelAbstraction label = new LabelAbstraction();
@@ -68,7 +68,6 @@ public class DeploymentAbstraction {
 			label.setLabelSelector("key", "value1");
 			label.setLabelSelector("key2", "value2");
 			V1LabelSelector selector = label.getLabelSelector();
-
 
 			//deal label requirement
 			/**
@@ -85,10 +84,8 @@ public class DeploymentAbstraction {
 			body.getSpec().setSelector(selector);
 
 			this.api = this.gfads.getAppsV1BetaApi();
-
-
-			this.api.patchNamespacedDeployment(name, namespace, body, null);			
-
+			return this.api.patchNamespacedDeployment(name, namespace, body, null);			
 		}
+		return null;
 	}
 }

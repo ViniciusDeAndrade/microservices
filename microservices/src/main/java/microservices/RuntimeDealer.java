@@ -24,7 +24,6 @@ import io.kubernetes.client.util.Config;
 import io.kubernetes.client.util.KubeConfig;
 import uniqueInstance.ConfigGFADS;
 
-@Deprecated
 public class RuntimeDealer {
 /*
 	private static final String pathToGfadsConfigFile = 
