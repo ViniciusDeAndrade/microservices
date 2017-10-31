@@ -54,7 +54,7 @@ public class PodAbstraction {
 		String podName = pod.getMetadata().getName();
 		String podNamespace = pod.getMetadata().getNamespace();		
 		
-		ConfigGFADS.getCoreV1ApiInstance().patchNamespacedPod(podName, podNamespace, pod, null);
+		//ConfigGFADS.getCoreV1ApiInstance().patchNamespacedPod(podName, podNamespace, pod, null);
 		System.out.println("and now it is on node: "+pod.getSpec().getNodeName());
 		
 	}

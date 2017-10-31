@@ -19,15 +19,20 @@ public class Test {
 
 		final String oldNode = "swarm1";
 		final String newNode = "swarm5";
+		ConfigGFADS gfads = new ConfigGFADS();
 
 		DeploymentAbstraction deploy = new DeploymentAbstraction();
-		V1PodList podList = ConfigGFADS.getCoreV1ApiInstance().listPodForAllNamespaces(null, null, null, null, null, null);
-		for(V1Pod pod: podList.getItems()) 
-			if(pod.getMetadata().getName().equals(podName)) {		
-				//passo 1 - setar labels aos pods.
+		V1PodList podList = gfads.getCoreV1ApiInstance().listPodForAllNamespaces(null, null, null, null, null, null);
+		for(V1Pod pod: podList.getItems()) {
+			if(pod.getMetadata().getName().equals(podName)) {	
 				V1Pod newPod = deploy.setLabelsToPods(pod.getMetadata().getName(), pod.getMetadata().getNamespace(), pod, null);
 
-			}
+				//System.out.println(pod.toString());
+			}		
+
+			//passo 1 - setar labels aos pods.
+
+		}
 		//passo 2 - add selector ao deployment
 		AppsV1beta1Deployment d = deploy.patchDeployment();
 

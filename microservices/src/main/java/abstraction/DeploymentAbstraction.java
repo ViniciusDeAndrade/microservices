@@ -18,11 +18,13 @@ import uniqueInstance.ConfigGFADS;
 public class DeploymentAbstraction {
 
 	private ConfigGFADS gfads ;
-	private AppsV1beta1Api api = gfads.getAppsV1BetaApi();
-	private CoreV1Api core = ConfigGFADS.getCoreV1ApiInstance();;
+	private AppsV1beta1Api api ;
+	private CoreV1Api core ;
 
 	public DeploymentAbstraction() throws FileNotFoundException {
 		this.gfads = new ConfigGFADS();
+		this.core = new CoreV1Api(this.gfads.getApiClient());
+		this.api = new AppsV1beta1Api(this.gfads.getApiClient());
 	}
 
 	@Deprecated
@@ -50,10 +52,13 @@ public class DeploymentAbstraction {
 		for(V1Pod pod: list.getItems())
 			if(pod.getMetadata().getName().equals(podName))
 				//apply label to the selected pod by its name
-				pod.getMetadata().setLabels(labels.getLabelSelector().getMatchLabels());
+				//pod.getMetadata().setLabels(labels.getLabelSelector().getMatchLabels());
 
-		//partially update a pod
-		return core.patchNamespacedPod(podName, namespace, body, pretty);
+				//partially update a pod
+				//System.out.println(podName+ " \n " + namespace + "\n" + body.toString() );
+
+				return core.patchNamespacedPod(podName, namespace, pod, pretty);
+		return null;
 
 	}
 
@@ -83,7 +88,8 @@ public class DeploymentAbstraction {
 			body.getSpec().setSelector(selector);
 
 			//this.api = this.gfads.getAppsV1BetaApi();
-			return this.api.patchNamespacedDeployment(name, namespace, body, null);			
+			return this.api.patchNamespacedDeployment(name, namespace, body, null);
+
 		}
 		return null;
 	}

@@ -21,23 +21,24 @@ import io.kubernetes.client.util.KubeConfig;
  */
 public class ConfigGFADS {
 	
-	private static final String pathToGfadsConfigFile = "/home/vinicius/Documentos/gfads-test.config";
-	private static FileReader gfadsConfigFile;
-	private static KubeConfig kc;
-	private static ApiClient client;
+	private  final String pathToGfadsConfigFile = "/home/vinicius/Documentos/gfads-test.config";
+	private FileReader gfadsConfigFile;
+	private KubeConfig kc;
+	private ApiClient client;
 
-	private static CoreV1Api api = null;
-	private static AppsV1beta1Api apiBeta = null;
+	private CoreV1Api api = null;
+	private AppsV1beta1Api apiBeta = null;
 
 
 	public ConfigGFADS() throws FileNotFoundException {
 		gfadsConfigFile = new FileReader(pathToGfadsConfigFile );
 		kc = KubeConfig.loadKubeConfig(gfadsConfigFile);
 		client = Config.fromConfig(kc);
-		Configuration.setDefaultApiClient(client);		
+		Configuration.setDefaultApiClient(client);
+		client.setConnectTimeout(10000);
 	}
 	
-	public static ApiClient getApiClient() {
+	public ApiClient getApiClient() {
 		return client;
 	}
 	
@@ -46,9 +47,9 @@ public class ConfigGFADS {
 	 * @return the runtime object
 	 */
 	
-	public static AppsV1beta1Api getAppsV1BetaApi() {
+	public  AppsV1beta1Api getAppsV1BetaApi() {
 		if(apiBeta ==null)
-			apiBeta = new AppsV1beta1Api();
+			apiBeta = new AppsV1beta1Api(client);
 		return apiBeta;
 	}
 
@@ -56,9 +57,9 @@ public class ConfigGFADS {
 	 * this method will return the unique instance of the k8 runtime pod object
 	 * @return the runtime object
 	 */
-	public static CoreV1Api getCoreV1ApiInstance() {
+	public  CoreV1Api getCoreV1ApiInstance() {
 		if(api == null)
-			api = new CoreV1Api();
+			api = new CoreV1Api(client);
 		return api;			
 	}
 
